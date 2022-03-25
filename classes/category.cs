@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExoBiblio.classes
 {
-    internal class Class1
+    internal class category
     {
     }
 }
