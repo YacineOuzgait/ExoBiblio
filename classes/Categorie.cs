@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 
 namespace ExoBiblio.classes
 {
-    internal class Category
+    internal class Categorie
     {
         private int id;
         private string titre;
 
         public string Titre { get => titre; set => titre = value; }
 
-        public Category()
+        public Categorie()
         {
 
         }
-        public Category(string titre)
+        public Categorie(string titre)
         {
 
         }
 
-        public Category(int id, string titre)
+        public Categorie(int id, string titre)
         {
 
         }
