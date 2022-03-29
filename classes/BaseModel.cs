@@ -29,6 +29,7 @@ namespace ExoBiblio.classes
         } }
 
         //public static DAL.
+        public static DAL.JsonDataAcces<T> jDA = new DAL.JsonDataAcces<T>();
 
     }
 }
