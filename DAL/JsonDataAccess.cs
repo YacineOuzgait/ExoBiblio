@@ -16,7 +16,7 @@ namespace ExoBiblio.DAL
                 return dataList;
             }
         }
-        private List<T> LoadJsonData()
+        public List<T> LoadJsonData()
         {
             string className = typeof(T).Name.ToLower();
             using (StreamReader reader = new StreamReader($"JsonData/{className}.json"))

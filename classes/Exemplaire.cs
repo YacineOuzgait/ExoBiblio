@@ -38,8 +38,5 @@ namespace ExoBiblio.classes
             }
         }
 
-
-
-
     }
 }
