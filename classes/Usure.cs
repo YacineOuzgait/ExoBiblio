@@ -6,22 +6,20 @@ using System.Threading.Tasks;
 
 namespace ExoBiblio.classes
 {
-    internal class Usure
+    internal class Usure : BaseModel<Usure>
     {
-        int id;
         string etat;
-        bool deleted;
 
-        public Usure()
+        public string Etat
         {
-
-        }
-
-        public Usure(int id, string etat, bool deleted)
-        {
-            this.id = id;
-            this.etat = etat;
-            this.deleted = deleted;
+            get { return etat; }
+            set
+            {
+                if (this.etat != value)
+                {
+                    this.etat = value;
+                }
+            }
         }
 
     }
