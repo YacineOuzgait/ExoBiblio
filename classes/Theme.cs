@@ -6,17 +6,21 @@ using System.Threading.Tasks;
 
 namespace ExoBiblio.classes
 {
-    internal class Theme
+    internal class Theme :  BaseModel<Theme>
     {
-        int id;
+        
         string titre;
-        bool deleted;
 
-        public Theme(int id, string titre, bool deleted)
+        public string Titre
         {
-            this.id = id;
-            this.titre = titre;
-            this.deleted = deleted;
+            get { return titre; }
+            set
+            {
+                if (this.titre != value)
+                {
+                    this.titre = value;
+                }
+            }
         }
 
     }

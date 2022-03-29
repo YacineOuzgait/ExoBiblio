@@ -6,19 +6,36 @@ using System.Threading.Tasks;
 
 namespace ExoBiblio.classes
 {
-    internal class Auteur
+    internal class Auteur : BaseModel<Auteur>
     {
-        int id;
 
         string prenom;
         string nom;
 
-        public Auteur(int id, string prenom, string nom)
+        public string Nom
         {
-            this.id = id;
-            this.prenom = prenom;
-            this.nom = nom;
-        } 
+            get { return nom; }
+            set
+            {
+                if (this.nom != value)
+                {
+                    this.nom = value;
+                }
+            }
+        }
+
+        public string Prenom
+        {
+            get { return prenom; }
+            set
+            {
+                if (this.prenom != value)
+                {
+                    this.prenom = value;
+                }
+            }
+        }
+
 
     }
 }
