@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExoBiblio.classes
 {
+
   internal class Livre : BaseModel<Livre>
     {
         
@@ -37,4 +38,6 @@ namespace ExoBiblio.classes
             }
         }
     }
+
 }
+
