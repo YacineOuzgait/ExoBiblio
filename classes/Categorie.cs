@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExoBiblio.classes
 {
-    internal class Categorie
+    internal class Categorie : BaseModel<Categorie>
     {
         private string titre;
 
