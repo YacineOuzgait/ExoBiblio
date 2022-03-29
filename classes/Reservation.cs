@@ -9,7 +9,7 @@ namespace ExoBiblio.classes
 {
     internal class Reservation : BaseModel<Reservation>
     {
-        [JsonProperty(PropertyName = "date_adhesion")]
+        [JsonProperty(PropertyName = "date_reservation")]
         string dateReservation;
 
         public DateTime DateReservation
