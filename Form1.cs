@@ -6,5 +6,12 @@ namespace ExoBiblio
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+            
+            classes.Abonne abonne = new classes.Abonne() { Adresse = "" };
+        }
     }
 }
