@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 
 namespace ExoBiblio.classes
 {
-    internal class MotCle
+    internal class MotCle :BaseModel<MotCle>
     {
-        int id;
         string mot;
 
-        public MotCle(int id, string mot)
+        public string Mot
         {
-            this.id = id;
-            this.mot = mot;
+            get { return mot; }
+            set
+            {
+                if (this.mot != value)
+                {
+                    this.mot = value;
+                }
+            }
         }
 
     }
