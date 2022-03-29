@@ -8,23 +8,18 @@ namespace ExoBiblio.classes
 {
     internal class Categorie
     {
-        private int id;
         private string titre;
 
-        public string Titre { get => titre; set => titre = value; }
-
-        public Categorie()
-        {
-
+        public string Titre { 
+            get { return titre; }
+            set 
+            {
+                if (this.titre != value)
+                {
+                    this.titre = value;
+                }
+            } 
         }
-        public Categorie(string titre)
-        {
 
-        }
-
-        public Categorie(int id, string titre)
-        {
-
-        }
     }
 }
