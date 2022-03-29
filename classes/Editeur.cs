@@ -6,15 +6,21 @@ using System.Threading.Tasks;
 
 namespace ExoBiblio.classes
 {
-    internal class Editeur
+    internal class Editeur : BaseModel<Editeur>
     {
-        int id;
+        
         string nom;
 
-        public Editeur(int id, string nom)
+        public string Nom
         {
-            this.id = id;
-            this.nom = nom;
+            get { return nom; }
+            set
+            {
+                if (this.nom != value)
+                {
+                    this.nom = value;
+                }
+            }
         }
     }
 
