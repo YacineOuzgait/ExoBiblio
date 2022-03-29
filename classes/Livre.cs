@@ -6,20 +6,38 @@ using System.Threading.Tasks;
 
 namespace ExoBiblio.classes
 {
-    public class Livre
+
+  internal class Livre : BaseModel<Livre>
     {
-        int id;
+        
         string titre;
         string isbn;
-        bool deleted;
 
-        public Livre(int id, string titre, string isbn, bool deleted)
+        public string Titre
+        { 
+            get
+            { return titre; } 
+            set
+            {
+                if (this.titre != value)
+                {
+                    this.titre = value;
+                }
+            }
+                }
+        public string Isbn
         {
-            this.id = id;
-            this.titre = titre;
-            this.isbn = isbn;
-            this.deleted = deleted;
+            get
+            { return isbn; }
+            set
+            {
+                if (this.isbn != value)
+                {
+                    this.isbn = value;
+                }
+            }
         }
-
     }
+
 }
+
