@@ -249,7 +249,7 @@ namespace ExoBiblio.classes
             int index = this.MotCleList.FindIndex(item => item.Id == motcle.Id);
             if (index >= 0)
             {
-                this.IdMotCLeList.Remove(motcle.Id);
+                this.IdMotCleList.Remove(motcle.Id);
                 this.MotCleList.RemoveAt(index);
                 motcle.RemoveLivre(this);
                 //TODO persist
