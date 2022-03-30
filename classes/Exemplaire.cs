@@ -152,5 +152,46 @@ namespace ExoBiblio.classes
                 }
             }
         }
+
+        [JsonIgnore]
+        private List<Emprunt> empruntsList;
+        public List<Emprunt> EmpruntsList
+        {
+            get
+            {
+                if (this.empruntsList == null)
+                {
+                    this.empruntsList = Emprunt.jDA.GetAll(item => item.IdExemplaire == this.Id);
+                }
+                return this.empruntsList;
+            }
+        }
+        public List<Emprunt> AddEmprunt(Emprunt emprunt)
+        {
+            if (this.EmpruntsList.Find(item => item.Id == emprunt.Id) == null)
+            {
+                this.EmpruntsList.Add(emprunt);
+                if (emprunt.Exemplaire.Id != this.Id)
+                {
+                    emprunt.Exemplaire = this;
+                }
+            }
+            return this.EmpruntsList;
+        }
+
+        public List<Emprunt> RemoveEmprunt(Emprunt emprunt)
+        {
+            int index = this.EmpruntsList.FindIndex(item => item.Id == mprunt.Id);
+            if (index >= 0)
+            {
+                this.EmpruntsList.RemoveAt(index);
+                if (emprunt.Exemplaire.Id == this.Id)
+                {
+                    emprunt.Exemplaire = null;
+                }
+            }
+            return this.EmpruntsList;
+        }
+
     }
 }
