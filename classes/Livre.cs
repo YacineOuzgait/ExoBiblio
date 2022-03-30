@@ -79,6 +79,45 @@ namespace ExoBiblio.classes
             return this.ExemplairesList;
         }
 
+        [JsonIgnore]
+        private List<Reservation> reservationsList;
+        public List<Reservation> ReservationsList
+        {
+            get
+            {
+                if (this.reservationsList == null)
+                {
+                    this.reservationsList = Reservation.jDA.GetAll(item => item.IdLivre == this.Id);
+                }
+                return this.reservationsList;
+            }
+        }
+        public List<Reservation> AddReservation(Reservation reservation)
+        {
+            if (this.ReservationsList.Find(item => item.Id == reservation.Id) == null)
+            {
+                this.ReservationsList.Add(reservation);
+                if (reservation.Livre.Id != this.Id)
+                {
+                    reservation.Livre = this;
+                }
+            }
+            return this.ReservationsList;
+        }
+
+        public List<Reservation> RemoveReservation(Exemplaire reservation)
+        {
+            int index = this.ReservationsList.FindIndex(item => item.Id == reservation.Id);
+            if (index >= 0)
+            {
+                this.ReservationsList.RemoveAt(index);
+                if (reservation.Livre.Id == this.Id)
+                {
+                    reservation.Livre = null;
+                }
+            }
+            return this.ReservationsList;
+        }
 
         [JsonIgnore]
         private List<int> idAuteurList;
@@ -160,8 +199,8 @@ namespace ExoBiblio.classes
         }
 
         [JsonIgnore]
-        private List<Auteur> themeList;
-        public List<Auteur> ThemeList
+        private List<Theme> themeList;
+        public List<Theme> ThemeList
         {
             get
             {
