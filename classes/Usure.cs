@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,43 +23,44 @@ namespace ExoBiblio.classes
             }
         }
 
-        [JsonProperty(PropertyName = "id_exemplaire")]
-        private int? idExemplaire;
-        public int? idExemplaire
-        {
-            get { return idExemplaire; }
-            set
-            {
-                if (this.idExemplaire != value)
-                {
-                    this.idExemplaire = value;
-                    //TODO persist ?
-                }
-            }
-        }
-
         [JsonIgnore]
-        private Exemplaire exemplaire;
-        public Exemplaire Exemplaire
+        private List<Exemplaire> exemplairesList;
+        public List<Exemplaire> ExemplairesList
         {
             get
             {
-                if (this.exemplaire == null)
+                if (this.exemplairesList == null)
                 {
-                    exemplaire = Exemplaire.jDA.GetById(this.idExemplaire);
+                    this.exemplairesList = Exemplaire.jDA.GetAll(item => item.IdUsure == this.Id);
                 }
-                return exemplaire;
+                return this.exemplairesList;
             }
-            set
+        }
+        public List<Exemplaire> AddExemplaire(Exemplaire exemplaire)
+        {
+            if (this.ExemplairesList.Find(item => item.Id == exemplaire.Id) == null)
             {
-                if (this.idExemplaire != value?.Id)
+                this.ExemplairesList.Add(exemplaire);
+                if (exemplaire.Usure.Id != this.Id)
                 {
-                    Exemplaire?.RemoveExemplaire(this);
-                    this.idExemplaire = value?.Id;
-                    this.exemplaire = null; //need to reset Livre get
-                    Exemplaire?.AddExemplaire(this);
+                    exemplaire.Usure = this;
                 }
             }
+            return this.ExemplairesList;
+        }
+
+        public List<Exemplaire> RemoveExemplaire(Exemplaire exemplaire)
+        {
+            int index = this.ExemplairesList.FindIndex(item => item.Id == exemplaire.Id);
+            if (index >= 0)
+            {
+                this.ExemplairesList.RemoveAt(index);
+                if (exemplaire.Usure.Id == this.Id)
+                {
+                    exemplaire.Usure = null;
+                }
+            }
+            return this.ExemplairesList;
         }
 
     }

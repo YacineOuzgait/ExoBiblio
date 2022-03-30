@@ -77,6 +77,30 @@ namespace ExoBiblio.classes
             }
         }
 
+        [JsonIgnore]
+        private Abonne abonne;
+        public Abonne Abonne
+        {
+            get
+            {
+                if (this.abonne == null)
+                {
+                    abonne = Abonne.jDA.GetById(this.idAbonne);
+                }
+                return abonne;
+            }
+            set
+            {
+                if (this.idAbonne != value.Id)
+                {
+                    Abonne.RemoveReservation(this);
+                    this.idAbonne = value.Id;
+                    //this.categorie = null; //need to reset Livre get
+                    Abonne.AddReservation(this);
+                }
+            }
+        }
+
         [JsonProperty(PropertyName = "id_editeur")]
         private int? idEditeur;
         public int? IdEditeur
@@ -114,6 +138,46 @@ namespace ExoBiblio.classes
                     Editeur?.AddReservation(this);
                 }
             }
+        }
+
+        [JsonIgnore]
+        private List<Editeur> editeursList;
+        public List<Editeur> EditeursList
+        {
+            get
+            {
+                if (this.editeursList == null)
+                {
+                    this.editeursList = Editeur.jDA.GetAll(item => item.IdReservation == this.Id);
+                }
+                return this.editeursList;
+            }
+        }
+        public List<Editeur> AddEditeur(Editeur editeur)
+        {
+            if (this.EditeursList.Find(item => item.Id == editeur.Id) == null)
+            {
+                this.EditeursList.Add(editeur);
+                if (editeur.Reservation.Id != this.Id)
+                {
+                    editeur.Reservation = this;
+                }
+            }
+            return this.EditeursList;
+        }
+
+        public List<Editeur> RemoveEditeur(Editeur editeur)
+        {
+            int index = this.EditeursList.FindIndex(item => item.Id == editeur.Id);
+            if (index >= 0)
+            {
+                this.EditeursList.RemoveAt(index);
+                if (editeur.Reservation.Id == this.Id)
+                {
+                    editeur.Reservation = null;
+                }
+            }
+            return this.EditeursList;
         }
     }
 }

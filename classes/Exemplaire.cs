@@ -108,7 +108,7 @@ namespace ExoBiblio.classes
                 if (this.idUsure != value?.Id)
                 {
                     Usure?.RemoveExemplaire(this);
-                    this.idUsure = value?.Id;
+                    this.idUsure = value.Id;
                     this.usure = null; //need to reset Usure get
                     Usure?.AddExemplaire(this);
                 }
@@ -146,12 +146,53 @@ namespace ExoBiblio.classes
                 if (this.idEditeur != value?.Id)
                 {
                     Editeur?.RemoveExemplaire(this);
-                    this.idEditeur = value?.Id;
+                    this.idEditeur = value.Id;
                     this.editeur = null; //need to reset Editeur get
                     Editeur?.AddExemplaire(this);
                 }
             }
         }
+
+        [JsonIgnore]
+        private List<Editeur> editeursList;
+        public List<Editeur> EditeursList
+        {
+            get
+            {
+                if (this.editeursList == null)
+                {
+                    this.editeursList = Editeur.jDA.GetAll(item => item.IdExemplaire == this.Id);
+                }
+                return this.editeursList;
+            }
+        }
+        public List<Editeur> AddEditeur(Editeur editeur)
+        {
+            if (this.EditeursList.Find(item => item.Id == editeur.Id) == null)
+            {
+                this.EditeursList.Add(editeur);
+                if (editeur.Exemplaire.Id != this.Id)
+                {
+                    editeur.Exemplaire = this;
+                }
+            }
+            return this.EditeursList;
+        }
+
+        public List<Editeur> RemoveEditeur(Editeur editeur)
+        {
+            int index = this.EditeursList.FindIndex(item => item.Id == editeur.Id);
+            if (index >= 0)
+            {
+                this.EditeursList.RemoveAt(index);
+                if (editeur.Exemplaire.Id == this.Id)
+                {
+                    editeur.Exemplaire = null;
+                }
+            }
+            return this.EditeursList;
+        }
+
 
         [JsonIgnore]
         private List<Emprunt> empruntsList;
@@ -181,7 +222,7 @@ namespace ExoBiblio.classes
 
         public List<Emprunt> RemoveEmprunt(Emprunt emprunt)
         {
-            int index = this.EmpruntsList.FindIndex(item => item.Id == mprunt.Id);
+            int index = this.EmpruntsList.FindIndex(item => item.Id == emprunt.Id);
             if (index >= 0)
             {
                 this.EmpruntsList.RemoveAt(index);

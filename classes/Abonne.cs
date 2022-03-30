@@ -220,7 +220,7 @@ namespace ExoBiblio.classes
                 return this.reservationsList;
             }
         }
-        public List<Reservation> AddEmprunt(Reservation reservation)
+        public List<Reservation> AddReservation(Reservation reservation)
         {
             if (this.ReservationsList.Find(item => item.Id == reservation.Id) == null)
             {
@@ -233,7 +233,7 @@ namespace ExoBiblio.classes
             return this.ReservationsList;
         }
 
-        public List<Reservation> RemoveEmprunt(Reservation reservation)
+        public List<Reservation> RemoveReservation(Reservation reservation)
         {
             int index = this.ReservationsList.FindIndex(item => item.Id == reservation.Id);
             if (index >= 0)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace ExoBiblio.classes
 {
@@ -26,7 +27,7 @@ namespace ExoBiblio.classes
 
         [JsonProperty(PropertyName = "id_exemplaire")]
         private int? idExemplaire;
-        public int? idExemplaire
+        public int? IdExemplaire
         {
             get { return idExemplaire; }
             set
@@ -55,18 +56,58 @@ namespace ExoBiblio.classes
             {
                 if (this.idExemplaire != value?.Id)
                 {
-                    Exemplaire?.RemoveExemplaire(this);
+                    Exemplaire?.RemoveEditeur(this);
                     this.idExemplaire = value?.Id;
                     this.exemplaire = null; //need to reset Livre get
-                    Exemplaire?.AddExemplaire(this);
+                    Exemplaire?.AddEditeur(this);
                 }
             }
+        }
+
+        [JsonIgnore]
+        private List<Exemplaire> exemplairesList;
+        public List<Exemplaire> ExemplairesList
+        {
+            get
+            {
+                if (this.exemplairesList == null)
+                {
+                    this.exemplairesList = Exemplaire.jDA.GetAll(item => item.IdEditeur == this.Id);
+                }
+                return this.exemplairesList;
+            }
+        }
+        public List<Exemplaire> AddExemplaire(Exemplaire exemplaire)
+        {
+            if (this.ExemplairesList.Find(item => item.Id == exemplaire.Id) == null)
+            {
+                this.ExemplairesList.Add(exemplaire);
+                if (exemplaire.Editeur.Id != this.Id)
+                {
+                    exemplaire.Editeur = this;
+                }
+            }
+            return this.ExemplairesList;
+        }
+
+        public List<Exemplaire> RemoveExemplaire(Exemplaire exemplaire)
+        {
+            int index = this.ExemplairesList.FindIndex(item => item.Id == exemplaire.Id);
+            if (index >= 0)
+            {
+                this.ExemplairesList.RemoveAt(index);
+                if (exemplaire.Editeur.Id == this.Id)
+                {
+                    exemplaire.Editeur = null;
+                }
+            }
+            return this.ExemplairesList;
         }
 
 
         [JsonProperty(PropertyName = "id_reservation")]
         private int? idReservation;
-        public int? idReservation
+        public int? IdReservation
         {
             get { return idReservation; }
             set
@@ -95,12 +136,52 @@ namespace ExoBiblio.classes
             {
                 if (this.idReservation != value?.Id)
                 {
-                    Reservation?.RemoveReservation(this);
+                    Reservation?.RemoveEditeur(this);
                     this.idReservation = value?.Id;
                     this.reservation = null; //need to reset Livre get
-                    Reservation?.AddReservation(this);
+                    Reservation?.AddEditeur(this);
                 }
             }
+        }
+
+        [JsonIgnore]
+        private List<Reservation> reservationsList;
+        public List<Reservation> ReservationsList
+        {
+            get
+            {
+                if (this.reservationsList == null)
+                {
+                    this.reservationsList = Reservation.jDA.GetAll(item => item.IdEditeur == this.Id);
+                }
+                return this.reservationsList;
+            }
+        }
+        public List<Reservation> AddReservation(Reservation reservation)
+        {
+            if (this.ReservationsList.Find(item => item.Id == reservation.Id) == null)
+            {
+                this.ReservationsList.Add(reservation);
+                if (reservation.Editeur.Id != this.Id)
+                {
+                    reservation.Editeur = this;
+                }
+            }
+            return this.ReservationsList;
+        }
+
+        public List<Reservation> RemoveReservation(Reservation reservation)
+        {
+            int index = this.ReservationsList.FindIndex(item => item.Id == reservation.Id);
+            if (index >= 0)
+            {
+                this.ReservationsList.RemoveAt(index);
+                if (reservation.Editeur.Id == this.Id)
+                {
+                    reservation.Editeur = null;
+                }
+            }
+            return this.ReservationsList;
         }
     }
 
