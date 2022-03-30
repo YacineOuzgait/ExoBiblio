@@ -22,5 +22,44 @@ namespace ExoBiblio.classes
             }
         }
 
+        [JsonProperty(PropertyName = "id_exemplaire")]
+        private int? idExemplaire;
+        public int? idExemplaire
+        {
+            get { return idExemplaire; }
+            set
+            {
+                if (this.idExemplaire != value)
+                {
+                    this.idExemplaire = value;
+                    //TODO persist ?
+                }
+            }
+        }
+
+        [JsonIgnore]
+        private Exemplaire exemplaire;
+        public Exemplaire Exemplaire
+        {
+            get
+            {
+                if (this.exemplaire == null)
+                {
+                    exemplaire = Exemplaire.jDA.GetById(this.idExemplaire);
+                }
+                return exemplaire;
+            }
+            set
+            {
+                if (this.idExemplaire != value?.Id)
+                {
+                    Exemplaire?.RemoveExemplaire(this);
+                    this.idExemplaire = value?.Id;
+                    this.exemplaire = null; //need to reset Livre get
+                    Exemplaire?.AddExemplaire(this);
+                }
+            }
+        }
+
     }
 }
