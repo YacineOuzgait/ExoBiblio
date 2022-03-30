@@ -38,5 +38,35 @@ namespace ExoBiblio.classes
             }
         }
 
+        [JsonProperty(PropertyName = "id_exemplaire")]
+        private int idExemplaire;
+        public int idExemplaire
+        {
+            get { return idExemplaire; }
+            set
+            {
+                if (this.idExemplaire != value)
+                {
+                    this.idExemplaire = value;
+                }
+            }
+        }
+
+        [JsonProperty(PropertyName = "id_abonne")]
+        private int idAbonne;
+        public int idAbonne
+        {
+            get { return idAbonne; }
+            set
+            {
+                if (this.idAbonne != value)
+                {
+                    this.idAbonne = value;
+                }
+            }
+        }
+
+
+
     }
 }
