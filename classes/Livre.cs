@@ -106,7 +106,7 @@ namespace ExoBiblio.classes
             return this.ReservationsList;
         }
 
-        public List<Reservation> RemoveReservation(Exemplaire reservation)
+        public List<Reservation> RemoveReservation(Reservation reservation)
         {
             int index = this.ReservationsList.FindIndex(item => item.Id == reservation.Id);
             if (index >= 0)
@@ -207,7 +207,7 @@ namespace ExoBiblio.classes
             {
                 if (this.themeList == null)
                 {
-                    this.themeList = Auteur.jDA.GetAll(item => this.IdThemeList.Contains(item.Id));
+                    this.themeList = Theme.jDA.GetAll(item => this.IdThemeList.Contains(item.Id));
                 }
                 return this.themeList;
             }

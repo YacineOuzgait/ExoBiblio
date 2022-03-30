@@ -63,23 +63,23 @@ namespace ExoBiblio.classes
             }
         }
 
-        [JsonProperty(PropertyName = "id_usure")]
-        private int idUsure;
-        public int IdUsure
+        [JsonProperty(PropertyName = "id_abonne")]
+        private int idAbonne;
+        public int IdAbonne
         {
-            get { return idUsure; }
+            get { return idAbonne; }
             set
             {
-                if (this.idUsure != value)
+                if (this.idAbonne != value)
                 {
-                    this.idUsure = value;
+                    this.idAbonne = value;
                 }
             }
         }
 
         [JsonProperty(PropertyName = "id_editeur")]
-        private int idEditeur;
-        public int IdEditeur
+        private int? idEditeur;
+        public int? IdEditeur
         {
             get { return idEditeur; }
             set
@@ -87,9 +87,33 @@ namespace ExoBiblio.classes
                 if (this.idEditeur != value)
                 {
                     this.idEditeur = value;
+                    //TODO persist ?
                 }
             }
         }
 
+        [JsonIgnore]
+        private Editeur editeur;
+        public Editeur Editeur
+        {
+            get
+            {
+                if (this.editeur == null)
+                {
+                    editeur = Editeur.jDA.GetById(this.idEditeur);
+                }
+                return editeur;
+            }
+            set
+            {
+                if (this.idEditeur != value?.Id)
+                {
+                    Editeur?.RemoveReservation(this);
+                    this.idEditeur = value?.Id;
+                    this.editeur = null; //need to reset Livre get
+                    Editeur?.AddReservation(this);
+                }
+            }
+        }
     }
 }
