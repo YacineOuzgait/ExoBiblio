@@ -156,10 +156,10 @@ namespace ExoBiblio.classes
             {
                 if (this.idCategorie != value.Id)
                 {
-                    Categorie.RemoveCategorie(this);
+                    Categorie.RemoveAbonne(this);
                     this.idCategorie = value.Id;
                     //this.categorie = null; //need to reset Livre get
-                    Categorie.AddCategorie(this);
+                    Categorie.AddAbonne(this);
                 }
             }
         }
