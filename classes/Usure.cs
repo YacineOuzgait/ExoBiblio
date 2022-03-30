@@ -9,7 +9,7 @@ namespace ExoBiblio.classes
 {
     internal class Usure : BaseModel<Usure>
     {
-        string etat;
+        string etat = "neuf";
 
         public string Etat
         {
