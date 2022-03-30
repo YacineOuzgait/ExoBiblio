@@ -1,0 +1,27 @@
+[
+    {
+        "id":1,
+        "titre":"séniore",
+        "deleted":false
+    },
+    {
+        "id":2,
+        "titre":"adulte",
+        "deleted":false
+    },
+    {
+        "id":3,
+        "titre":"enfant",
+        "deleted":false
+    },
+    {
+        "id":4,
+        "titre":"etudiant",
+        "deleted":false
+    },
+    {
+        "id":5,
+        "titre":"sans-emploi",
+        "deleted":false
+    }
+]
