@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -62,7 +63,7 @@ namespace ExoBiblio.classes
             {
                 this.IdLivreList.Add(livre.Id);
                 this.LivreList.Add(livre);
-                livre.AddMotcle(this);
+                livre.AddMotCle(this);
                 //TODO persist 
             }
             return this.LivreList;
@@ -75,7 +76,7 @@ namespace ExoBiblio.classes
             {
                 this.IdLivreList.Remove(livre.Id);
                 this.LivreList.RemoveAt(index);
-                livre.RemoveMotcle(this);
+                livre.RemoveMotCle(this);
                 //TODO persist
             }
             return this.LivreList;

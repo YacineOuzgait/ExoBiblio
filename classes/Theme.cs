@@ -24,6 +24,28 @@ namespace ExoBiblio.classes
             }
         }
 
+
+        [JsonIgnore]
+        private List<int> idLivreList;
+        [JsonIgnore]
+        public List<int> IdLivreList
+        {
+            get
+            {
+                if (this.idLivreList == null)
+                {
+
+                    List<dynamic> ids = jDA.LoadJsonData("theme_livre").FindAll(item => item.id_theme == this.Id);
+                    idLivreList = new();
+                    ids.ForEach(item =>
+                    {
+                        idLivreList.Add((int)item.id_livre);
+                    });
+                }
+                return this.idLivreList;
+            }
+        }
+
         [JsonIgnore]
         private List<Livre> livreList;
         public List<Livre> LivreList

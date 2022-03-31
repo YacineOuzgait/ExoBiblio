@@ -40,7 +40,7 @@ namespace ExoBiblio.classes
 
         [JsonProperty(PropertyName = "id_exemplaire")]
         private int idExemplaire;
-        public int idExemplaire
+        public int IdExemplaire
         {
             get { return idExemplaire; }
             set
@@ -52,9 +52,33 @@ namespace ExoBiblio.classes
             }
         }
 
+        [JsonIgnore]
+        private Exemplaire exemplaire;
+        public Exemplaire Exemplaire
+        {
+            get
+            {
+                if (this.exemplaire == null)
+                {
+                    exemplaire = Exemplaire.jDA.GetById(this.idExemplaire);
+                }
+                return exemplaire;
+            }
+            set
+            {
+                if (this.idExemplaire != value.Id)
+                {
+                    Exemplaire.RemoveEmprunt(this);
+                    this.idExemplaire = value.Id;
+                    //this.categorie = null; //need to reset Livre get
+                    Exemplaire.AddEmprunt(this);
+                }
+            }
+        }
+
         [JsonProperty(PropertyName = "id_abonne")]
         private int idAbonne;
-        public int idAbonne
+        public int IdAbonne
         {
             get { return idAbonne; }
             set
@@ -62,6 +86,30 @@ namespace ExoBiblio.classes
                 if (this.idAbonne != value)
                 {
                     this.idAbonne = value;
+                }
+            }
+        }
+
+        [JsonIgnore]
+        private Abonne abonne;
+        public Abonne Abonne
+        {
+            get
+            {
+                if (this.abonne == null)
+                {
+                    abonne = Abonne.jDA.GetById(this.idAbonne);
+                }
+                return abonne;
+            }
+            set
+            {
+                if (this.idAbonne != value.Id)
+                {
+                    Abonne.RemoveEmprunt(this);
+                    this.idAbonne = value.Id;
+                    //this.categorie = null; //need to reset Livre get
+                    Abonne.AddEmprunt(this);
                 }
             }
         }
