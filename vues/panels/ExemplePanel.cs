@@ -8,8 +8,14 @@ namespace ExoBiblio.vues.panels
 {
     internal class ExemplePanel : Panel
     {
-            public ExemplePanel()
+        public Form1 mainForm;
+
+        public ExemplePanel(Form1 inMainForm)
             {
+                mainForm = inMainForm;
+                //Change le panel id !!
+                TabPage parent = mainForm.mainTab.TabPages[0];
+
                 Label label = new Label();
                 label.Text = "test";
                 this.Controls.Add(label);
